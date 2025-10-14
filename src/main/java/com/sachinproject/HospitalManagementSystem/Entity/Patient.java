@@ -1,28 +1,40 @@
 package com.sachinproject.HospitalManagementSystem.Entity;
 
 import com.sachinproject.HospitalManagementSystem.Entity.Type.BloodGroupType;
+import com.sachinproject.HospitalManagementSystem.Entity.Type.Insurance;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="patient",uniqueConstraints = {@UniqueConstraint(name="email",columnNames={"email"})})
+@ToString
+
+@Table(name="patient")
 public class Patient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name="first_name" ,nullable = false)
     private String name;
+
     @Column(name="birth_Date",nullable = false)
     private LocalDateTime birthdate;
+
+    @Column(unique = true)
     private String email;
+
     @Column(name="gender",nullable = false)
     private String Gender;
 
@@ -33,14 +45,10 @@ public class Patient {
     @Column(name="blood_group" ,nullable = false)
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", birthdate=" + birthdate +
-                ", email='" + email + '\'' +
-                ", Gender='" + Gender + '\'' +
-                '}';
-    }
+    @OneToOne
+    @JoinColumn(name = "patient_insurance_id")
+    private Insurance insurance;
+
+    @OneToMany(mappedBy = "patient" ,cascade = CascadeType.ALL)
+    private List<Appointment> appointments = new ArrayList<>();
 }
