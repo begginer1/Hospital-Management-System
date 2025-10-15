@@ -5,6 +5,7 @@ import com.sachinproject.HospitalManagementSystem.Entity.Insurance;
 import com.sachinproject.HospitalManagementSystem.repository.InsuranceRepository;
 import com.sachinproject.HospitalManagementSystem.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +23,13 @@ public class InsuranceService {
 
         patient.setInsurance(insurnace);
         insurnace.setPatient(patient);
+        return patient;
+    }
+
+    @Transactional
+    public Patient dissassociationInsurancefromPatient(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow();
+        patient.setInsurance(null); //because orphan remaoval s true insurance which is delete form Patient is deleted
         return patient;
     }
 }

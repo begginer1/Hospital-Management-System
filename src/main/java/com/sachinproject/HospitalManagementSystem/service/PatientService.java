@@ -17,9 +17,10 @@ public class PatientService {
     }
 
     @Transactional // for storing in persistient api for using persistent context as catche
-    public Patient getPatientByid(Long id)
-{
-    Patient p=patientRepository.findById(id).orElseThrow();
-    return p;
-}
+    public Patient getPatientByid(Long id) {
+        Patient p = patientRepository.findById(id).orElseThrow();
+        return p;
+    }
+
+
 }

@@ -37,4 +37,16 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
         return appointment;
     }
+
+    @Transactional
+    public Appointment reAssignAppointmentToAnotherDoctor(Long appointmentId, Long doctorId) {
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow();
+        System.out.println("Before Appountment" + appointment);
+        Doctor doctor1 = doctorRepository.findById(doctorId).orElseThrow();
+        appointment.setDoctor(doctor1);  // this will automatically call sav beacause appointment is dirty
+        System.out.println("Before Appountment" + appointment);
+        return appointment;
+    }
+
 }
+

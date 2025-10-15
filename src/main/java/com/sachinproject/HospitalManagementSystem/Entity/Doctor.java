@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@ToString
+@ToString(exclude = "departments")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -34,10 +34,10 @@ public class Doctor {
     private String email;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @ManyToMany(mappedBy = "doctors")
+    @ManyToMany(mappedBy = "doctors", fetch = FetchType.EAGER)
 
     private Set<Department> departments = new HashSet<>();
 }

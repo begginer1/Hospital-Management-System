@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Entity
-@ToString
+@ToString(exclude = "appointments")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -43,11 +43,11 @@ public class Patient {
     @Column(name = "blood_group", nullable = false)
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "patient_insurance_id")
     private Insurance insurance;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Appointment> appointments = new ArrayList<>();
 
     public Insurance getInsurance() {
@@ -65,4 +65,5 @@ public class Patient {
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
     }
+
 }
