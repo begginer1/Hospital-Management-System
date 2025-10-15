@@ -3,6 +3,7 @@ package com.sachinproject.HospitalManagementSystem.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.stereotype.Component;
 
 import javax.print.Doc;
 import java.math.BigInteger;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +34,10 @@ public class Doctor {
     private String email;
 
     @CreationTimestamp
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @ManyToMany(mappedBy="doctors")
+    @ManyToMany(mappedBy = "doctors")
 
-    private Set<Department> departments=new HashSet<>();
+    private Set<Department> departments = new HashSet<>();
 }

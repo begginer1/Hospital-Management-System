@@ -16,12 +16,13 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
 
     @CreationTimestamp
@@ -33,6 +34,6 @@ public class Department {
 
 
     @ManyToMany
-    @JoinTable(name="department_doctors")
-    private Set<Doctor> doctors=new HashSet<>();
+    @JoinTable(name = "department_doctors")
+    private Set<Doctor> doctors = new HashSet<>();
 }
